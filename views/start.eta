@@ -1,6 +1,6 @@
 <% layout("./layouts.eta") %>
 
-
+<h3 style = "color:red"> Tervetuloa vierailija osoitteesta <%= it.ip%> </h3>
 
 <span><%it%></span>
     <h3 style = "margin:0 auto"> Lista 3.0</h3>
