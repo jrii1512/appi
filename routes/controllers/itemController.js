@@ -4,6 +4,9 @@ import { renderFile } from "../../deps.js";
 import { ensureDir, ensureFile, ensureFileSync } from "https://deno.land/std/fs/mod.ts";
 import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
 import { getIP } from "https://deno.land/x/get_ip/mod.ts";
+import { readLines } from "https://deno.land/std/io/mod.ts";
+import * as path from "https://deno.land/std/path/mod.ts";
+import { readline } from "https://deno.land/x/readline@v1.1.0/mod.ts";
 
 
 
