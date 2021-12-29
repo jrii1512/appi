@@ -1,10 +1,11 @@
-import {client} from "../database/db.js";
+import { client } from "../database/db.js";
+import routes from "../routes/routes.js";
+import { pvm, loggaus } from "../routes/controllers/itemController.js";
 
-//const databaseUrl = Deno.env.get("DATABASE_URL");
+var log = [];
 
-
-const addIdea = async(idea, esittaja, ideaStatus, orderStatus, deliveredStatus) => {
-    console.log('Syötetään lista tauluun -> ' +  idea + ", " + esittaja + ",ideaStatus-> " + ideaStatus, " ,orderStatus->" + orderStatus + ", deliveredStatus->" + deliveredStatus);
+const addIdea = async (idea, esittaja, ideaStatus, orderStatus, deliveredStatus) => {
+    console.log('Syötetään lista tauluun -> ' + idea + ", " + esittaja + ",ideaStatus-> " + ideaStatus, " ,orderStatus->" + orderStatus + ", deliveredStatus->" + deliveredStatus);
     await client.connect();
     await client.queryArray('INSERT INTO lista (toive, esittaja, ideastatus, orderstatus, deliveredstatus) VALUES($1, $2, $3, $4, $5)', idea, esittaja, ideaStatus, orderStatus, deliveredStatus);
     await client.end();
@@ -20,20 +21,20 @@ const fetchIdeas = async () => {
     return res.rows;
 }
 
-const changeOrderService = async(id) => {
+const changeOrderService = async (id) => {
     console.log("Starting to update ordered status values");
     await client.connect();
-    await client.queryArray("UPDATE lista SET ideastatus = false, orderstatus = true, deliveredstatus = false WHERE id = $1", id);        
+    await client.queryArray("UPDATE lista SET ideastatus = false, orderstatus = true, deliveredstatus = false WHERE id = $1", id);
     await client.end();
-    console.log("Order status updated");    
+    console.log("Order status updated");
 }
 
-const changeDeliveredService = async(id) => {
+const changeDeliveredService = async (id) => {
     console.log("Updating table delivered status value");
     await client.connect();
-    await client.queryArray("UPDATE lista SET ideastatus = false, orderstatus = false, deliveredstatus = true WHERE id = $1", id);        
+    await client.queryArray("UPDATE lista SET ideastatus = false, orderstatus = false, deliveredstatus = true WHERE id = $1", id);
     await client.end();
-    console.log("Delivery status updated");    
+    console.log("Delivery status updated");
 }
 
 const fetchOrders = async (id) => {
@@ -52,31 +53,41 @@ const fetchDelivered = async (id) => {
     await client.connect();
     const ret = await client.queryArray('SELECT * from lista WHERE deliveredstatus = true');
     console.log("itemService returned");
-    for (const r of ret.rows){
+    for (const r of ret.rows) {
         console.log(r);
     }
     await client.end();
-    
+
     return ret.rows;
 }
 
-const deleteAll = async() => {
+const deleteAll = async () => {
     console.log("itemService, deleteAll funkkari");
     await client.connect();
     await client.queryArray('DELETE FROM lista');
     await client.end();
-    
+
+    //delete log file
+    try {
+        Deno.removeSync("logs/appi_logs.log");
+        console.log("logi file tuhottu");
+    } catch (err) {
+        log.push(pvm + ", error " + err);
+        loggaus(log);
+        console.error(err);
+    }
+
     const msg = "Kaikki tuhottu";
     let data = new Response("Kaikki Tuhottu", {
-        status : 200,
-        statusText : "Joulu deletoitu",
+        status: 200,
+        statusText: "Data deletoitu",
         headers: {
             "content-type": "text/html",
-          },
+        },
     });
-    
+
     return data.statusText;
-    
+
 }
 
-export {addIdea, fetchIdeas, fetchOrders, fetchDelivered, changeDeliveredService, changeOrderService, deleteAll};
+export { addIdea, fetchIdeas, fetchOrders, fetchDelivered, changeDeliveredService, changeOrderService, deleteAll };

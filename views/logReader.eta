@@ -4,8 +4,8 @@
 <h3>Logs</h3>
 
 <ul>
-<%= it.content.replace(".", ".<p>") %>
-
+<% let data = it.content.split(".") %>
+<%= data %>
         <form method = "GET" action = "/" >
             <input type = "submit" value = "Alkuun"/>
         </form>

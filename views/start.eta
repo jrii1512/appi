@@ -3,7 +3,7 @@
 
 
 <span><%it%></span>
-    <h3 style = "margin:0 auto"> Lahjalista 3.0</h3>
+    <h3 style = "margin:0 auto"> Lista 3.0</h3>
     <p>
 
     <form action = "/ideas" method = "post" name ="startForm">
@@ -11,7 +11,7 @@
           <textarea cols = "35" rows = "4" name = "toive">Suklaa rasia ja kirja</textarea>        
           <p><p>
         <label for="esittaja"><b>Kenelle</b></label><p>
-          <input type = "text" name = "esittaja" value="Anybody">
+          <input type = "text" name = "esittaja" value="Jouni">
         <p><p>
         <input type = "submit" value = "Lisää idea">
     </form>
