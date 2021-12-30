@@ -7,7 +7,8 @@ import { getIP } from "https://deno.land/x/get_ip/mod.ts";
 import { readLines } from "https://deno.land/std/io/mod.ts";
 import * as path from "https://deno.land/std/path/mod.ts";
 import { readline } from "https://deno.land/x/readline@v1.1.0/mod.ts";
-
+import { IPLocationService } from "https://deno.land/x/location/iplocationservice.ts"
+import { CityLocationService } from "https://deno.land/x/location/citylocationservice.ts"
 
 
 const pvm = () => {
@@ -19,10 +20,20 @@ const pvm = () => {
 
 
 var log = [];
+//var ip = getIP({ ipv6: true });
+//console.log(ip);
+//const ipLocation = await IPLocationService.getIPLocation(ip);
 
 const showMain = async ({ response }) => {
+    var ip = await getIP({ ipv6: true });
+    console.log(ip);
+    const ipLocation = await IPLocationService.getIPLocation(ip);
+    const region = ipLocation.region_name;
+    console.log(region);
+
     response.body = await renderFile('../views/start.eta', {
         ip: await getIP({ ipv6: true }),
+        loc: region,
     });
 };
 
