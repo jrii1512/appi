@@ -1,6 +1,8 @@
 <% layout("./layouts.eta") %>
 
-<h3 style = "color:red"> Tervetuloa vierailija läänistä  <%= it.loc%> </h3>
+<h3 style = "color:red"> Tervetuloa vierailija, sijaintisi
+
+<%= it.ip%> </h3>
 
 <span><%it%></span>
     <h3 style = "margin:0 auto"> Lista 3.0</h3>
@@ -27,3 +29,6 @@
   <input type = "submit" value = "Näytä logit">
 </form>
 
+<form method = "get" action = "/gps">
+  <input type = "submit" value = "Näytä sijaintisi">
+</form>

@@ -1,0 +1,14 @@
+<% layout("./layouts.eta") %>
+
+
+<h3>Sijainti</h3>
+
+<ul>
+
+<%= it.ip %>
+        <form method = "GET" action = "/" >
+            <input type = "submit" value = "Alkuun"/>
+        </form>
+<ul>
+
+

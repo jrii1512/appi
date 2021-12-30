@@ -1,4 +1,4 @@
-import { Context } from 'https://deno.land/x/oak@v9.0.1/mod.ts';
+import { Context, send } from 'https://deno.land/x/oak@v9.0.1/mod.ts';
 import * as itemServices from "../../services/itemService.js";
 import { renderFile } from "../../deps.js";
 import { ensureDir, ensureFile, ensureFileSync } from "https://deno.land/std/fs/mod.ts";
@@ -9,7 +9,8 @@ import * as path from "https://deno.land/std/path/mod.ts";
 import { readline } from "https://deno.land/x/readline@v1.1.0/mod.ts";
 import { IPLocationService } from "https://deno.land/x/location/iplocationservice.ts"
 import { CityLocationService } from "https://deno.land/x/location/citylocationservice.ts"
-
+import { open } from "https://deno.land/x/opener/mod.ts";
+import {existsSync} from "https://deno.land/std/fs/mod.ts";
 
 const pvm = () => {
     var temp = format(new Date(), "yyyy-MM-dd HH:mm:ss");
@@ -20,9 +21,43 @@ const pvm = () => {
 
 
 var log = [];
-//var ip = getIP({ ipv6: true });
-//console.log(ip);
-//const ipLocation = await IPLocationService.getIPLocation(ip);
+
+const showLocation = async (request) =>{
+    console.log("showLocation, opening ip.html from ../");
+    console.log("current location " + Deno.cwd());
+    if(existsSync("./ip.html"))
+    {
+        console.log("File ip.html found, trying to open it");
+    try{
+        await open("ip.html")
+    }
+    catch (e){
+        console.error(e);
+    }
+    }
+}
+/*
+    var myLat = 0;
+    var myLong = 0;
+    var locStr = "";
+    console.log("nav: " + navigator.geolocation);
+    if (navigator.geolocation) {
+        console.log("navigator.geolocation")
+        navigator.geolocation.getCurrentPosition(function(position) {
+            myLat = position.coords.latitude;
+            myLong = position.coords.longitude;
+            console.log("latitude: " + myLat);
+            console.log("longitude: "  + myLong);
+            locStr = "<iframe style=\"width: 400px; height: 400px\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"//maps.google.com/?ll=" + mylat + "," + mylong + "&z=16&output=embed\"></iframe>";
+        });
+
+        response.body = await renderFile('../views/location.eta', {
+            ip: locStr,
+        });
+      }
+*/
+
+
 
 const showMain = async ({ response }) => {
     var ip = await getIP({ ipv6: true });
@@ -31,7 +66,9 @@ const showMain = async ({ response }) => {
     const region = ipLocation.region_name;
     console.log(region);
 
+
     response.body = await renderFile('../views/start.eta', {
+        //ip: locStr,
         ip: await getIP({ ipv6: true }),
         loc: region,
     });
@@ -123,7 +160,7 @@ const loggaus = async (log) => {
 
 
 
-export { showMain, getIdeas, getOrders, getDelivered, addIdea, doDelete, showLogFile, pvm, loggaus };
+export { showMain, getIdeas, getOrders, getDelivered, addIdea, doDelete, showLogFile, pvm, loggaus, showLocation };
 
 
 
