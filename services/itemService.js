@@ -1,15 +1,15 @@
 import { client } from "../database/db.js";
 import routes from "../routes/routes.js";
-import { pvm, loggaus } from "../routes/controllers/itemController.js";
+//import { pvm } from "../routes/controllers/itemController.js";
 
 var log = [];
 
-const addIdea = async (idea, esittaja, ideaStatus, orderStatus, deliveredStatus) => {
-    console.log('Syötetään lista tauluun -> ' + idea + ", " + esittaja + ",ideaStatus-> " + ideaStatus, " ,orderStatus->" + orderStatus + ", deliveredStatus->" + deliveredStatus);
+const addPost = async (message, sender, location) => {
+    console.log('Inserting data to elephant sql instance');
     await client.connect();
-    await client.queryArray('INSERT INTO lista (toive, esittaja, ideastatus, orderstatus, deliveredstatus) VALUES($1, $2, $3, $4, $5)', idea, esittaja, ideaStatus, orderStatus, deliveredStatus);
+    await client.queryArray('INSERT INTO visitorBook (message, sender, location) VALUES($1, $2, $3)', message, sender, location);
     await client.end();
-    await fetchIdeas();
+    //await fetchIdeas();
 }
 
 const fetchIdeas = async () => {
@@ -90,4 +90,4 @@ const deleteAll = async () => {
 
 }
 
-export { addIdea, fetchIdeas, fetchOrders, fetchDelivered, changeDeliveredService, changeOrderService, deleteAll };
+export { addPost };

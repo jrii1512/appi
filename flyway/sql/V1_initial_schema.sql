@@ -5,10 +5,7 @@ CREATE TABLE collections (
 
 CREATE TABLE lista (
 	id SERIAL PRIMARY KEY,
-	toive VARCHAR(150) UNIQUE,
-	esittaja VARCHAR(50) UNIQUE,
-	ideaStatus BOOLEAN,
-	orderStatus BOOLEAN,
-	deliveredStatus BOOLEAN,
-	lista_id INTEGER REFERENCES lista(id)
+	message VARCHAR(200) UNIQUE,
+	sender VARCHAR(50) UNIQUE,
+	location VARCHAR(100) UNIQUE,
 );

@@ -1,24 +1,30 @@
 <% layout("./layouts.eta") %>
 
-<h3 style = "color:red"> Tervetuloa vierailija, sijaintisi
-
-<%= it.ip%> </h3>
+<h3 style = "color:red">Hello visitor from <%= it.ip%>,<br>
+write few sentences.</h3>
 
 <span><%it%></span>
-    <h3 style = "margin:0 auto"> Lista 3.0</h3>
+    <h3 style = "margin:0 auto"> Message Box</h3>
     <p>
 
-    <form action = "/ideas" method = "post" name ="startForm">
-        <label for="toive"><b>Idea</b></label><p>
-          <textarea cols = "35" rows = "4" name = "toive">Suklaa rasia ja kirja</textarea>
+    <form action = "/message" method = "post" name ="startForm">
+        <label for="sender"><b>Your name:</b><p>
+          <input type = "text" name = "sender" value="">
+        </label>
+        <p>
+        <label for="location"><b>Location (optional, but would be nice to hear)</b><p>
+          <input type = "text" name = "location" value=<%= it.loc %> ?>
+        </label>
+        <p>
+        <label for="message"><b>Message</b></label><p>
+          <textarea cols = "35" rows = "4" name = "message"></textarea>
           <p><p>
-        <label for="esittaja"><b>Kenelle</b></label><p>
-          <input type = "text" name = "esittaja" value="Jouni">
         <p><p>
-        <input type = "submit" value = "Lisää idea">
+        <input type = "submit" value = "Post your message">
     </form>
   <p>
 
+<!--
 <form method = "post" action = "/tuhoa">
   <input type = "submit" value = "Tuhoa ideat">
 </form>
@@ -32,3 +38,4 @@
 <form method = "get" action = "/gps">
   <input type = "submit" value = "Näytä sijaintisi">
 </form>
+-->
