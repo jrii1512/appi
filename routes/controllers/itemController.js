@@ -22,7 +22,8 @@ const pvm = () => {
 
 var log = [];
 
-const showLocation = async (request) =>{
+const showLocation = async (request, response) =>{
+
     console.log("showLocation, opening ip.html from ../");
     console.log("current location " + Deno.cwd());
     if(existsSync("./ip.html"))
@@ -37,11 +38,11 @@ const showLocation = async (request) =>{
     }
 }
 /*
-    var myLat = 0;
-    var myLong = 0;
-    var locStr = "";
+    var myLat;
+    var myLong;
+    var locStr;
     console.log("nav: " + navigator.geolocation);
-    if (navigator.geolocation) {
+    if (navigator.geolocation != undefined) {
         console.log("navigator.geolocation")
         navigator.geolocation.getCurrentPosition(function(position) {
             myLat = position.coords.latitude;
@@ -50,11 +51,16 @@ const showLocation = async (request) =>{
             console.log("longitude: "  + myLong);
             locStr = "<iframe style=\"width: 400px; height: 400px\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"//maps.google.com/?ll=" + mylat + "," + mylong + "&z=16&output=embed\"></iframe>";
         });
-
         response.body = await renderFile('../views/location.eta', {
             ip: locStr,
         });
+
+      } else {
+        response.body = await renderFile('../views/location.eta', {
+            ip: "navigator.geolocation returns undefined",
+        });
       }
+    }
 */
 
 
