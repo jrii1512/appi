@@ -28,7 +28,7 @@ const showLocation = async (request, response) =>{
     console.log("current location " + Deno.cwd());
     if(existsSync("./ip.html"))
     {
-        console.log("ip.html found, trying to open it");
+        console.log("ip.html (geolocation) found, trying to open it");
     try{
         await open("ip.html")
     }
