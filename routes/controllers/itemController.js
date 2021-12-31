@@ -30,7 +30,7 @@ const showLocation = async (request, response) =>{
     {
         console.log("File ip.html found, trying to open it");
     try{
-        await open("https://getone-7.herokuapp.com/ip.html")
+        await open("ip.html")
     }
     catch (e){
         console.error(e);
